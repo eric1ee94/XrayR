@@ -1,136 +1,79 @@
-{\rtf1\ansi\ansicpg936\cocoartf2636
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Italic;}
-{\colortbl;\red255\green255\blue255;\red0\green128\blue0;\red100\green0\blue200;\red220\green0\blue156;
-\red173\green128\blue0;}
-{\*\expandedcolortbl;;\csgenericrgb\c0\c50196\c0;\csgenericrgb\c39216\c0\c78431;\csgenericrgb\c86275\c0\c61176;
-\csgenericrgb\c67843\c50196\c0;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\deftab720
-\pard\pardeftab720\partightenfactor0
+Log:
+  Level: warning # Log level: none, error, warning, info, debug 
+  AccessPath: # /etc/XrayR/access.Log
+  ErrorPath: # /etc/XrayR/error.log
+DnsConfigPath: # /etc/XrayR/dns.json # Path to dns config, check https://xtls.github.io/config/dns.html for help
+RouteConfigPath: # /etc/XrayR/route.json # Path to route config, check https://xtls.github.io/config/routing.html for help
+InboundConfigPath: # /etc/XrayR/custom_inbound.json # Path to custom inbound config, check https://xtls.github.io/config/inbound.html for help
+OutboundConfigPath: # /etc/XrayR/custom_outbound.json # Path to custom outbound config, check https://xtls.github.io/config/outbound.html for help
+ConnetionConfig:
+  Handshake: 4 # Handshake time limit, Second
+  ConnIdle: 30 # Connection idle time limit, Second
+  UplinkOnly: 2 # Time limit when the connection downstream is closed, Second
+  DownlinkOnly: 4 # Time limit when the connection is closed after the uplink is closed, Second
+  BufferSize: 64 # The internal cache size of each connection, kB 
+Nodes:
+  -
+    PanelType: "V2board" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
+    ApiConfig:
+      ApiHost: "https://jay-cloud.com"
+      ApiKey: "jaycloudisthebest"
+      NodeID: 52
+      NodeType: Trojan # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
+      Timeout: 30 # Timeout for the api request
+      EnableVless: false # Enable Vless for V2ray Type
+      EnableXTLS: false # Enable XTLS for V2ray and Trojan
+      SpeedLimit: 0 # Mbps, Local settings will replace remote settings, 0 means disable
+      DeviceLimit: 0 # Local settings will replace remote settings, 0 means disable
+      RuleListPath: /etc/XrayR/rulelist # /etc/XrayR/rulelist Path to local rulelist file
+    ControllerConfig:
+      ListenIP: 0.0.0.0 # IP address you want to listen
+      SendIP: 0.0.0.0 # IP address you want to send pacakage
+      UpdatePeriodic: 60 # Time to update the nodeinfo, how many sec.
+      EnableDNS: true # Use custom DNS config, Please ensure that you set the dns.json well
+      DNSType: UseIP # AsIs, UseIP, UseIPv4, UseIPv6, DNS strategy
+      EnableProxyProtocol: false # Only works for WebSocket and TCP
+      EnableFallback: false # Only support for Trojan and Vless
+      FallBackConfigs:  # Support multiple fallbacks
+        -
+          SNI: azhk.wikup.live # TLS SNI(Server Name Indication), Empty for any
+          Path: # HTTP PATH, Empty for any
+          Dest: 80 # Required, Destination of fallback, check https://xtls.github.io/config/features/fallback.html for details.
+          ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
+      CertConfig:
+        CertMode: http # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
+        CertDomain: "azhk.wikup.live" # Domain to cert
+        CertFile: /etc/XrayR/cert/node1.test.com.cert # Provided if the CertMode is file
+        KeyFile: /etc/XrayR/cert/node1.test.com.key
+        Provider: cloudflare # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
+        Email: test@me.com
+        DNSEnv: # DNS ENV option used by DNS provider
+          CLOUDFLARE_EMAIL: lx471265150@hotmail.com
+          CLOUDFLARE_API_KEY: 9237250d39c53b1a1a57b5157e0543c9207e9
+  # -
+  #   PanelType: "V2board" # Panel type: SSpanel, V2board
+  #   ApiConfig:
+  #     ApiHost: "http://127.0.0.1:668"
+  #     ApiKey: "123"
+  #     NodeID: 4
+  #     NodeType: Shadowsocks # Node type: V2ray, Shadowsocks, Trojan
+  #     Timeout: 30 # Timeout for the api request
+  #     EnableVless: false # Enable Vless for V2ray Type
+  #     EnableXTLS: false # Enable XTLS for V2ray and Trojan
+  #     SpeedLimit: 0 # Mbps, Local settings will replace remote settings
+  #     DeviceLimit: 0 # Local settings will replace remote settings
+  #   ControllerConfig:
+  #     ListenIP: 0.0.0.0 # IP address you want to listen
+  #     UpdatePeriodic: 10 # Time to update the nodeinfo, how many sec.
+  #     EnableDNS: false # Use custom DNS config, Please ensure that you set the dns.json well
+  #     CertConfig:
+  #       CertMode: dns # Option about how to get certificate: none, file, http, dns
+  #       CertDomain: "node1.test.com" # Domain to cert
+  #       CertFile: /etc/XrayR/cert/node1.test.com.cert # Provided if the CertMode is file
+  #       KeyFile: /etc/XrayR/cert/node1.test.com.pem
+  #       Provider: alidns # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
+  #       Email: test@me.com
+  #       DNSEnv: # DNS ENV option used by DNS provider
+  #         ALICLOUD_ACCESS_KEY: aaa
+  #         ALICLOUD_SECRET_KEY: bbb
 
-\f0\fs14 \cf0 Log:\uc0\u8232   Level: warning 
-\f1\i \cf2 # Log level: none, error, warning, info, debug \uc0\u8232 
-\f0\i0   \cf0 AccessPath: 
-\f1\i \cf2 # /etc/XrayR/access.Log\uc0\u8232 
-\f0\i0   \cf0 ErrorPath: 
-\f1\i \cf2 # /etc/XrayR/error.log\uc0\u8232 
-\f0\i0 \cf0 DnsConfigPath: 
-\f1\i \cf2 # /etc/XrayR/dns.json # Path to dns config, check https://xtls.github.io/config/dns.html for help\uc0\u8232 
-\f0\i0 \cf0 RouteConfigPath: 
-\f1\i \cf2 # /etc/XrayR/route.json # Path to route config, check https://xtls.github.io/config/routing.html for help\uc0\u8232 
-\f0\i0 \cf0 InboundConfigPath: 
-\f1\i \cf2 # /etc/XrayR/custom_inbound.json # Path to custom inbound config, check https://xtls.github.io/config/inbound.html for help\uc0\u8232 
-\f0\i0 \cf0 OutboundConfigPath: 
-\f1\i \cf2 # /etc/XrayR/custom_outbound.json # Path to custom outbound config, check https://xtls.github.io/config/outbound.html for help\uc0\u8232 
-\f0\i0 \cf0 ConnetionConfig:\uc0\u8232   Handshake: \cf3 4 
-\f1\i \cf2 # Handshake time limit, Second\uc0\u8232 
-\f0\i0   \cf0 ConnIdle: \cf3 30 
-\f1\i \cf2 # Connection idle time limit, Second\uc0\u8232 
-\f0\i0   \cf0 UplinkOnly: \cf3 2 
-\f1\i \cf2 # Time limit when the connection downstream is closed, Second\uc0\u8232 
-\f0\i0   \cf0 DownlinkOnly: \cf3 4 
-\f1\i \cf2 # Time limit when the connection is closed after the uplink is closed, Second\uc0\u8232 
-\f0\i0   \cf0 BufferSize: \cf3 64 
-\f1\i \cf2 # The internal cache size of each connection, kB \uc0\u8232 
-\f0\i0 \cf0 Nodes:\uc0\u8232   -\u8232     PanelType: \cf4 "V2board" 
-\f1\i \cf2 # Panel type: SSpanel, V2board, PMpanel, , Proxypanel\uc0\u8232 
-\f0\i0     \cf0 ApiConfig:\uc0\u8232       ApiHost: \cf4 "https://jay-cloud.com"\uc0\u8232       \cf0 ApiKey: \cf4 "jaycloudisthebest"\uc0\u8232       \cf0 NodeID: \cf3 1\uc0\u8232       \cf0 NodeType: Trojan 
-\f1\i \cf2 # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin\uc0\u8232 
-\f0\i0       \cf0 Timeout: \cf3 30 
-\f1\i \cf2 # Timeout for the api request\uc0\u8232 
-\f0\i0       \cf0 EnableVless: \cf5 false 
-\f1\i \cf2 # Enable Vless for V2ray Type\uc0\u8232 
-\f0\i0       \cf0 EnableXTLS: \cf5 false 
-\f1\i \cf2 # Enable XTLS for V2ray and Trojan\uc0\u8232 
-\f0\i0       \cf0 SpeedLimit: \cf3 0 
-\f1\i \cf2 # Mbps, Local settings will replace remote settings, 0 means disable\uc0\u8232 
-\f0\i0       \cf0 DeviceLimit: \cf3 0 
-\f1\i \cf2 # Local settings will replace remote settings, 0 means disable\uc0\u8232 
-\f0\i0       \cf0 RuleListPath: /etc/XrayR/rulelist 
-\f1\i \cf2 # /etc/XrayR/rulelist Path to local rulelist file\uc0\u8232 
-\f0\i0     \cf0 ControllerConfig:\uc0\u8232       ListenIP: \cf3 0\cf0 .\cf3 0\cf0 .\cf3 0\cf0 .\cf3 0 
-\f1\i \cf2 # IP address you want to listen\uc0\u8232 
-\f0\i0       \cf0 SendIP: \cf3 0\cf0 .\cf3 0\cf0 .\cf3 0\cf0 .\cf3 0 
-\f1\i \cf2 # IP address you want to send pacakage\uc0\u8232 
-\f0\i0       \cf0 UpdatePeriodic: \cf3 60 
-\f1\i \cf2 # Time to update the nodeinfo, how many sec.\uc0\u8232 
-\f0\i0       \cf0 EnableDNS: \cf5 true 
-\f1\i \cf2 # Use custom DNS config, Please ensure that you set the dns.json well\uc0\u8232 
-\f0\i0       \cf0 DNSType: UseIP 
-\f1\i \cf2 # AsIs, UseIP, UseIPv4, UseIPv6, DNS strategy\uc0\u8232 
-\f0\i0       \cf0 EnableProxyProtocol: \cf5 false 
-\f1\i \cf2 # Only works for WebSocket and TCP\uc0\u8232 
-\f0\i0       \cf0 EnableFallback: \cf5 false 
-\f1\i \cf2 # Only support for Trojan and Vless\uc0\u8232 
-\f0\i0       \cf0 FallBackConfigs:  
-\f1\i \cf2 # Support multiple fallbacks\uc0\u8232 
-\f0\i0         \cf0 -\uc0\u8232           SNI: azhk.wikup.live 
-\f1\i \cf2 # TLS SNI(Server Name Indication), Empty for any\uc0\u8232 
-\f0\i0           \cf0 Path: 
-\f1\i \cf2 # HTTP PATH, Empty for any\uc0\u8232 
-\f0\i0           \cf0 Dest: \cf3 80 
-\f1\i \cf2 # Required, Destination of fallback, check https://xtls.github.io/config/features/fallback.html for details.\uc0\u8232 
-\f0\i0           \cf0 ProxyProtocolVer: \cf3 0 
-\f1\i \cf2 # Send PROXY protocol version, 0 for dsable\uc0\u8232 
-\f0\i0       \cf0 CertConfig:\uc0\u8232         CertMode: http 
-\f1\i \cf2 # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.\uc0\u8232 
-\f0\i0         \cf0 CertDomain: \cf4 "azhk.wikup.live" 
-\f1\i \cf2 # Domain to cert\uc0\u8232 
-\f0\i0         \cf0 CertFile: /etc/XrayR/cert/node1.\cf5 test\cf0 .com.cert 
-\f1\i \cf2 # Provided if the CertMode is file\uc0\u8232 
-\f0\i0         \cf0 KeyFile: /etc/XrayR/cert/node1.\cf5 test\cf0 .com.key\uc0\u8232         Provider: cloudflare 
-\f1\i \cf2 # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/\uc0\u8232 
-\f0\i0         \cf0 Email: test@me.com\uc0\u8232         DNSEnv: 
-\f1\i \cf2 # DNS ENV option used by DNS provider\uc0\u8232 
-\f0\i0           \cf0 CLOUDFLARE_EMAIL: lx471265150@hotmail.com\uc0\u8232           CLOUDFLARE_API_KEY: \cf3 9237250\cf0 d39c53b1a1a57b5157e0543c9207e9\uc0\u8232   
-\f1\i \cf2 # -\uc0\u8232 
-\f0\i0   
-\f1\i #   PanelType: "V2board" # Panel type: SSpanel, V2board\uc0\u8232 
-\f0\i0   
-\f1\i #   ApiConfig:\uc0\u8232 
-\f0\i0   
-\f1\i #     ApiHost: "http://127.0.0.1:668"\uc0\u8232 
-\f0\i0   
-\f1\i #     ApiKey: "123"\uc0\u8232 
-\f0\i0   
-\f1\i #     NodeID: 4\uc0\u8232 
-\f0\i0   
-\f1\i #     NodeType: Shadowsocks # Node type: V2ray, Shadowsocks, Trojan\uc0\u8232 
-\f0\i0   
-\f1\i #     Timeout: 30 # Timeout for the api request\uc0\u8232 
-\f0\i0   
-\f1\i #     EnableVless: false # Enable Vless for V2ray Type\uc0\u8232 
-\f0\i0   
-\f1\i #     EnableXTLS: false # Enable XTLS for V2ray and Trojan\uc0\u8232 
-\f0\i0   
-\f1\i #     SpeedLimit: 0 # Mbps, Local settings will replace remote settings\uc0\u8232 
-\f0\i0   
-\f1\i #     DeviceLimit: 0 # Local settings will replace remote settings\uc0\u8232 
-\f0\i0   
-\f1\i #   ControllerConfig:\uc0\u8232 
-\f0\i0   
-\f1\i #     ListenIP: 0.0.0.0 # IP address you want to listen\uc0\u8232 
-\f0\i0   
-\f1\i #     UpdatePeriodic: 10 # Time to update the nodeinfo, how many sec.\uc0\u8232 
-\f0\i0   
-\f1\i #     EnableDNS: false # Use custom DNS config, Please ensure that you set the dns.json well\uc0\u8232 
-\f0\i0   
-\f1\i #     CertConfig:\uc0\u8232 
-\f0\i0   
-\f1\i #       CertMode: dns # Option about how to get certificate: none, file, http, dns\uc0\u8232 
-\f0\i0   
-\f1\i #       CertDomain: "node1.test.com" # Domain to cert\uc0\u8232 
-\f0\i0   
-\f1\i #       CertFile: /etc/XrayR/cert/node1.test.com.cert # Provided if the CertMode is file\uc0\u8232 
-\f0\i0   
-\f1\i #       KeyFile: /etc/XrayR/cert/node1.test.com.pem\uc0\u8232 
-\f0\i0   
-\f1\i #       Provider: alidns # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/\uc0\u8232 
-\f0\i0   
-\f1\i #       Email: test@me.com\uc0\u8232 
-\f0\i0   
-\f1\i #       DNSEnv: # DNS ENV option used by DNS provider\uc0\u8232 
-\f0\i0   
-\f1\i #         ALICLOUD_ACCESS_KEY: aaa\uc0\u8232 
-\f0\i0   
-\f1\i #         ALICLOUD_SECRET_KEY: bbb\uc0\u8232 \u8232 \u8232 }
